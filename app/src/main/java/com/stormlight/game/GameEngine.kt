@@ -26,7 +26,6 @@ class GameViewModel : ViewModel() {
     var gameMode by mutableStateOf(GameMode.SOLO)
     var currentAct by mutableStateOf(GameAct.ACT_1)
     
-    // Atributos del jugador
     var strTokens by mutableStateOf(2)
     var agiTokens by mutableStateOf(2)
     var intTokens by mutableStateOf(2)
@@ -34,9 +33,8 @@ class GameViewModel : ViewModel() {
     
     var stormlightCount by mutableStateOf(3)
     var corruptionCount by mutableStateOf(0)
-    var idealLevel by mutableStateOf(0) // Avance de los Ideales Radiantes
+    var idealLevel by mutableStateOf(0)
 
-    // Mazos y Mercado
     val act1Deck = mutableListOf(
         Card("1", "Esquirla de Puente", GameAct.ACT_1, CardType.HERO, Attribute.STR, 4, "+1 Fuerza, +1 Luz Tormentosa"),
         Card("2", "Estudiante de Navani", GameAct.ACT_1, CardType.HERO, Attribute.INT, 5, "+1 Perspicacia, Avanza Ideal", true),
@@ -47,7 +45,6 @@ class GameViewModel : ViewModel() {
     var playerTableau by mutableStateOf<List<Card>>(emptyList())
     var discardPile by mutableStateOf<List<Card>>(emptyList())
     
-    // Fichas seleccionadas para el lanzamiento actual
     var activeCastingTokens by mutableStateOf<List<String>>(emptyList())
     var selectedCardForAttempt by mutableStateOf<Card?>(null)
 
@@ -61,7 +58,7 @@ class GameViewModel : ViewModel() {
 
     fun selectCardToAttempt(card: Card) {
         selectedCardForAttempt = card
-        activeCastingTokens = emptyList() // Limpiar área de lanzamiento
+        activeCastingTokens = emptyList()
     }
 
     fun toggleTokenForCasting(tokenName: String) {
@@ -72,7 +69,6 @@ class GameViewModel : ViewModel() {
         }
     }
 
-    // Resolución de la tirada o intento de carta
     fun resolveAttempt() {
         val card = selectedCardForAttempt ?: return
         val powerRolled = activeCastingTokens.size * 2 + (1..6).random()
@@ -83,7 +79,6 @@ class GameViewModel : ViewModel() {
             if (card.corruptionCost) corruptionCount++
             if (card.reward.contains("Ideal")) idealLevel++
         } else {
-            // Descarte automático si falla
             discardPile = discardPile + card
             marketCards = marketCards.filter { it.id != card.id }
         }
