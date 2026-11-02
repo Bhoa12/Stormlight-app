@@ -12,4 +12,5 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-rootProject.name = "StormlightApp"
+rootProject.name = "Stormlight-app"
+include(":app")
