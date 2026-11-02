@@ -15,8 +15,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Validate Gradle Wrapper
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
