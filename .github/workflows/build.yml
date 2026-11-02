@@ -15,16 +15,14 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Create local.properties
-        run: echo "sdk.dir=$ANDROID_SDK_ROOT" > local.properties
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Install Global Gradle
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gradle
+      - name: Make gradlew executable
+        run: chmod +x gradlew
 
-      - name: Build APK Directly
-        run: gradle assembleDebug
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
 
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
